@@ -1,7 +1,8 @@
 #include "NotiLib.hpp"
 // Based off of Lars, "NotificationLib" (https://github.com/larsl2005/GTAG-NotificationLib)
 // Lib base from Pubert, "GUIManager" (Discord = pubertcs, GitHub = Pubert-CS)
-// Made By Lmko/Ossuary (KawaiiClique)
+// Made By Lmko/Ossuary (Kawaii)
+// KEEP THIS HERE OR CREDIT ME SOMEWHERE !!!!
 NotiLib& NotiLib::Instance() {
     static NotiLib instance;
     return instance;
