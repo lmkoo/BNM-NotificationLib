@@ -3,7 +3,7 @@
 // Lib base from Pubert, "GUIManager" (Discord = pubertcs, GitHub = Pubert-CS)
 // Made By Lmko/Ossuary (Kawaii)
 // KEEP THIS HERE OR CREDIT ME SOMEWHERE !!!!
-NotiLib& NotiLib::Instance() {
+NotiLib& NotiLib::Instance(){
     static NotiLib instance;
     return instance;
 }
@@ -18,7 +18,7 @@ NotiLib::NotiLib()
     BNM_LOG_INFO(BNM_OBFUSCATE("[Kawaii] | Notification Lib Started! | [+]"));//You can delete this if you want
 }
 
-void NotiLib::Init(Transform* cameraTransform, TextAnchor dockPos, Font* customFont) {
+void NotiLib::Init(Transform* cameraTransform, TextAnchor dockPos, Font* customFont){
     NotiLib& self = Instance();
     if (self.initialized) return;
     self.initialized = true;
@@ -31,7 +31,7 @@ void NotiLib::Init(Transform* cameraTransform, TextAnchor dockPos, Font* customF
     RectTransform* notifTransform = (RectTransform*)self.notifInstance->GetComponent(RectTransform::GetType());
 
     Font* fontToUse = customFont;
-    if (!customFont || !customFont->Alive()) {
+    if (!customFont || !customFont->Alive()){
         fontToUse = (Font*)Resources::GetBuiltinResource(Font::GetType(), "Arial.ttf");
     }
 
@@ -59,36 +59,36 @@ void NotiLib::Init(Transform* cameraTransform, TextAnchor dockPos, Font* customF
     self.previousNotification.clear();
 }
 
-void NotiLib::Destroy() {
+void NotiLib::Destroy(){
     if (!initialized) return;
     initialized = false;
 
-    if (notifInstance) {
+    if (notifInstance){
         GameObject::Destroy(notifInstance);
         notifInstance = nullptr;
     }
 }
 
-void NotiLib::SetText(const std::string& text) {
+void NotiLib::SetText(std::string text){
     notifText->SetText(text);
 }
 
-void NotiLib::SetDock(TextAnchor dockPos) {
+void NotiLib::SetDock(TextAnchor dockPos){
     notifText->SetAlignment((TextAnchor)dockPos);
 }
 
-void NotiLib::Update() {
+void NotiLib::Update(){
     NotiLib& self = Instance();
     if (!self.initialized || !self.isEnabled) return;
 
-    if (!self.notifications.empty()) {
+    if (!self.notifications.empty()){
         self.decayCounter++;
-        if (self.decayCounter > self.notificationDecayTime) {
+        if (self.decayCounter > self.notificationDecayTime){
             self.notifications.pop_front();
             self.decayCounter = 0;
 
             std::string newText;
-            for (const auto& line : self.notifications) {
+            for (const auto& line : self.notifications){
                 newText += line + "\n";
             }
             self.SetText(newText);
@@ -96,55 +96,55 @@ void NotiLib::Update() {
     }
 }
 
-void NotiLib::SendNotification(const std::string& notification) {
+void NotiLib::SendNotification(std::string notification){
     NotiLib& self = Instance();
     if (!self.isEnabled) return;
 
     std::string notif = notification;
-    if (notif.find('\n') == std::string::npos) {
+    if (notif.find('\n') == std::string::npos){
         notif += "\n";
     }
     self.notifications.push_back(notif);
     self.previousNotification = notif;
 
     std::string newText;
-    for (const auto& line : self.notifications) {
+    for (const auto& line : self.notifications){
         newText += line + "\n";
     }
     self.SetText(newText);
 }
 
-void NotiLib::ClearAllNotifications() {
+void NotiLib::ClearAllNotifications(){
     NotiLib& self = Instance();
     self.notifications.clear();
     self.SetText("");
 }
 
-void NotiLib::ClearPastNotifications(int amount) {
+void NotiLib::ClearPastNotifications(int amount){
     NotiLib& self = Instance();
-    if (amount <= 0 || amount >= (int)self.notifications.size()) {
+    if (amount <= 0 || amount >= (int)self.notifications.size()){
         ClearAllNotifications();
         return;
     }
-    for (int i = 0; i < amount; ++i) {
+    for (int i = 0; i < amount; ++i){
         self.notifications.pop_front();
     }
     std::string newText;
-    for (const auto& line : self.notifications) {
+    for (const auto& line : self.notifications){
         newText += line + "\n";
     }
     self.SetText(newText);
 }
 
-void NotiLib::SetEnabled(bool enabled) {
+void NotiLib::SetEnabled(bool enabled){
     NotiLib& self = Instance();
     self.isEnabled = enabled;
 }
 
-bool NotiLib::GetEnabled() const {
+bool NotiLib::GetEnabled(){
     return isEnabled;
 }
 
-const std::string& NotiLib::GetPreviousNotification() const {
+std::string NotiLib::GetPreviousNotification(){
     return previousNotification;
 }
