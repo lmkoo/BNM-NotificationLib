@@ -26,15 +26,15 @@ public:
 
     void Init(Transform* cameraTransform, TextAnchor dockPos, Font* customFont = nullptr);
     void Destroy();
-    void SetText(const std::string& text);
+    void SetText(std::string text);
     void SetDock(TextAnchor dockPos);
     void Update();
 
-    static void SendNotification(const std::string& notification);
+    static void SendNotification(std::string notification);
     static void ClearAllNotifications();
     static void ClearPastNotifications(int amount);
     static void SetEnabled(bool enabled);
 
-    bool GetEnabled() const;
-    const std::string& GetPreviousNotification() const;
+    bool GetEnabled();
+    std::string GetPreviousNotification();
 };
